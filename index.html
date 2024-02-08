@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <title>Babe</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div id="rain"></div>
+    <div class="flex flex-col items-center justify-center h-screen">
+        <h1 class="text-4xl mb-4" id="pregunta1">¿Me perdonas?</h1>
+        <div class="flex items-center justify-center space-x-4" id="pregunta">
+            <button id="noButton" class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded">
+                No
+            </button>
+            <button id="yesButton" class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded">
+                Si
+            </button>
+        </div>
+        <div id="imageContainer" class="mt-8">
+            <img id="image" src="./img/gattioflor.jpg" alt="Image 1" class="w-64 h-64">
+        </div>
+    </div>
+    <div id="confetti-wrapper" style="display: none;">
+    </div>
+    <script>
+        const noButton = document.getElementById('noButton');
+        const yesButton = document.getElementById('yesButton');
+        const pregunta = document.getElementById('pregunta');
+        const pregunta1 = document.getElementById('pregunta1');
+        const imageElement = document.getElementById('image');
+        const confettiDiv = document.getElementById('confetti-wrapper');
+        const imgenes = ["img/gato1.jpg", "img/gato2.jpg", "img/gato3.jpg", "img/gato4.jpg", "img/gato5.jpg"]
+
+
+
+        noButton.addEventListener('click', () => {
+
+            const randomIndex = Math.floor(Math.random() * imgenes.length);
+            const randomImage = imgenes[randomIndex];
+            imageElement.src = randomImage;
+            confettiDiv.style.display = 'none';
+
+            // Aumentar el tamaño del botón "Sí"
+            const currentButtonSize = parseInt(window.getComputedStyle(yesButton).getPropertyValue('font-size'));
+            const currentButtonSizea = parseInt(window.getComputedStyle(noButton).getPropertyValue('font-size'));
+            yesButton.style.fontSize = `${currentButtonSize + 10}px`;
+            noButton.style.fontSize = `${currentButtonSizea - 10}px`;
+
+        });
+
+        yesButton.addEventListener('click', () => {
+            confettiDiv.style.removeProperty('display');
+            pregunta.style.display = 'none';
+            pregunta1.style.display = 'none';
+
+            imageElement.src = "https://usagif.com/wp-content/uploads/gifs/dancing-cat-43.gif";
+        });
+
+        for (i = 0; i < 100; i++) {
+            // Random rotation
+            var randomRotation = Math.floor(Math.random() * 360);
+            // Random Scale
+            var randomScale = Math.random() * 1;
+            // Random width & height between 0 and viewport
+            var randomWidth = Math.floor(Math.random() * Math.max(document.documentElement.clientWidth, window.innerWidth || 0));
+            var randomHeight = Math.floor(Math.random() * Math.max(document.documentElement.clientHeight, window.innerHeight || 500));
+
+            // Random animation-delay
+            var randomAnimationDelay = Math.floor(Math.random() * 15);
+            console.log(randomAnimationDelay);
+
+            // Random colors
+            var colors = ['#0CD977', '#FF1C1C', '#FF93DE', '#5767ED', '#FFC61C', '#8497B0']
+            var randomColor = colors[Math.floor(Math.random() * colors.length)];
+
+            // Create confetti piece
+            var confetti = document.createElement('div');
+            confetti.className = 'confetti';
+            confetti.style.top = randomHeight + 'px';
+            confetti.style.right = randomWidth + 'px';
+            confetti.style.backgroundColor = randomColor;
+            // confetti.style.transform='scale(' + randomScale + ')';
+            confetti.style.obacity = randomScale;
+            confetti.style.transform = 'skew(15deg) rotate(' + randomRotation + 'deg)';
+            confetti.style.animationDelay = randomAnimationDelay + 's';
+            document.getElementById("confetti-wrapper").appendChild(confetti);
+        }
+
+
+    </script>
+
+</html>
